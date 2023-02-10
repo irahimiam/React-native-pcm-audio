@@ -17,6 +17,30 @@ const PcmAudio = NativeModules.PcmAudio
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return PcmAudio.multiply(a, b);
+
+export interface PCMAPlayerOptions  {
+  sampleRate?: number;
+  channelConfig?: 1 | 2;
+  bitsPerSample?: 8 | 16;
+  bufferSize?: number;
 }
+
+export interface PCMARecorderOptions  {
+  sampleRate?: number;
+  channelConfig?: 1 | 2;
+  bitsPerSample?: 8 | 16;
+  audioSource?: number;
+  bufferSize?: number;
+}
+
+export interface PCMAudioProps {
+  initializePCMPlayer: (options?: PCMAPlayerOptions) => void;
+  initializePCMRecorder: (options?: PCMARecorderOptions) => void;
+  startRecorder: () => void;
+  stopRecorder: () => Promise<string>;
+  startPlayer: () => void;
+  stopPlayer: () => Promise<string>;
+  on: (event: "data", callback: (data: string) => void) => void
+}
+
+export default PcmAudio as PCMAudioProps;
