@@ -38,7 +38,7 @@ export interface PCMAudioProps {
   initializePCMRecorder: (options?: PCMARecorderOptions) => void;
   startRecorder: () => void;
   stopRecorder: () => Promise<string>;
-  startPlayer: () => void;
+  startPlayer: (pcmData: any) => void;
   stopPlayer: () => Promise<string>;
   on: (event: "data", callback: (data: string) => void) => void
 }

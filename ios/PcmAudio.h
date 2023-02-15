@@ -1,12 +1,23 @@
-
-#ifdef RCT_NEW_ARCH_ENABLED
-#import "RNPcmAudioSpec.h"
-
-@interface PcmAudio : NSObject <NativePcmAudioSpec>
-#else
 #import <React/RCTBridgeModule.h>
+#import <AVFoundation/AVFoundation.h>
+#import <React/RCTEventEmitter.h>
+#import <React/RCTLog.h>
 
-@interface PcmAudio : NSObject <RCTBridgeModule>
-#endif
 
+#define kNumberBuffers 3
+
+typedef struct {
+    __unsafe_unretained id      mSelf;
+    AudioStreamBasicDescription mDataFormat;
+    AudioQueueRef               mQueue;
+    AudioQueueBufferRef         mBuffers[kNumberBuffers];
+    AudioFileID                 mAudioFile;
+    UInt32                      bufferByteSize;
+    SInt64                      mCurrentPacket;
+    bool                        mIsRunning;
+} AQRecordState;
+
+@interface PCMAudioRecorder : RCTEventEmitter <RCTBridgeModule>
+    @property (nonatomic, assign) AQRecordState recordState;
+    @property (nonatomic, strong) NSString* filePath;
 @end

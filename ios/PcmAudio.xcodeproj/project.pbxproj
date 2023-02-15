@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E555C0D2413F4C50049A1A2 /* PcmAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* PcmAudio.m */; };
+		5B6E75EF299CC67D007C3C11 /* PcmAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* PcmAudio.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -113,7 +113,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3E7B58A1CC2AC0600A0062D /* PcmAudio.m in Sources */,
+				5B6E75EF299CC67D007C3C11 /* PcmAudio.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -48,8 +49,6 @@ public class PcmAudioModule extends ReactContextBaseJavaModule {
   public PcmAudioModule(ReactApplicationContext reactContext) {
     super(reactContext);
     this.reactContext = reactContext;
-    this.eventEmitter = reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
-    this.isRecording = false;
   }
 
   @Override
@@ -59,7 +58,7 @@ public class PcmAudioModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void initializePCMPlayer(ReadableMap options, Promise promise) {
+  public void initializePCMPlayer(ReadableMap options) {
     try {
       playerSampleRateInHz = 44100;
       if (options.hasKey("sampleRate")) {
@@ -85,9 +84,8 @@ public class PcmAudioModule extends ReactContextBaseJavaModule {
 
       track = new AudioTrack(AudioManager.STREAM_MUSIC, playerSampleRateInHz, playerChannelConfig, playerAudioFormat, playerBufferSize, AudioTrack.MODE_STREAM);
       track.play();
-      promise.resolve(true);
     } catch (Exception e) {
-      promise.reject("Initialize pcm player error.", e);
+       e.printStackTrace();
     }
   }
 
@@ -121,6 +119,9 @@ public class PcmAudioModule extends ReactContextBaseJavaModule {
     if (options.hasKey("bufferSize")) {
       recorderBufferSize = options.getInt("bufferSize");
     }
+
+    isRecording = false;
+    eventEmitter = reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
 
     recorder = new AudioRecord(recorderAudioSource, recorderSampleRateInHz, recorderChannelConfig, recorderAudioFormat, recorderBufferSize);
   }
